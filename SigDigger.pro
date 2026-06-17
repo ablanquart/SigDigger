@@ -61,7 +61,11 @@ target.path=$$PREFIX/bin
 
 darwin: ICON = icons/SigDigger.icns
 darwin: QMAKE_RPATHDIR += $$SUWIDGETS_INSTALL_LIBS
-datwin: QMAKE_RPATHDIR += /usr/local/lib
+darwin {
+  QMAKE_RPATHDIR += /usr/local/lib
+  BREW_PREFIX = $$system(brew --prefix 2>/dev/null)
+  !isEmpty(BREW_PREFIX): QMAKE_RPATHDIR += $$BREW_PREFIX/lib
+}
 
 QMAKE_SUBSTITUTES += SigDigger.desktop.in RMSViewer.desktop.in
 desktop.path  = $$PREFIX/share/applications
